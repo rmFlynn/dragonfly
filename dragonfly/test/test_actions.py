@@ -26,7 +26,6 @@ from six import PY2
 from dragonfly.actions.action_base import Repeat
 from dragonfly.actions.action_function import Function
 from dragonfly.actions.action_key import Key
-from dragonfly.actions.action_mimic import Mimic
 from dragonfly.actions.action_paste import Paste
 from dragonfly.actions.action_text import Text
 
@@ -81,15 +80,6 @@ class TestNonAsciiPaste(unittest.TestCase):
 
         action = Paste("touché")
         self.assertEqual(str(action), "Paste(%r)" % ("touché",))
-
-
-class TestNonAsciiMimic(unittest.TestCase):
-
-    def test_non_ascii_mimic(self):
-        """ Test handling of non-ASCII characters in Mimic action. """
-
-        action = Mimic("touché")
-        self.assertEqual(str(action), "Mimic(%r)" % ("touché",))
 
 
 class TestRepeat(unittest.TestCase):

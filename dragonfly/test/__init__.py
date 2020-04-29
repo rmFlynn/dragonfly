@@ -20,8 +20,3 @@
 
 # --------------------------------------------------------------------------
 
-from .infrastructure     import TestError, RecognitionFailure, TestContext
-from .element_testcase   import ElementTestCase
-from .element_tester     import ElementTester
-from .rule_test_grammar  import RuleTestGrammar
-from .rule_testcase      import RuleTestCase

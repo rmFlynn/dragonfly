@@ -34,43 +34,6 @@ version = match.group("ver")
 release = match.group("rel")
 
 #---------------------------------------------------------------------------
-# Override the 'test' command to use pytest instead.
-# Test requirements are located in the 'test_requirements.txt' file.
-
-class test(Command):
-    description = 'run unit tests and doctests after in-place build'
-    user_options = [
-        # (long option, short option, description)
-        # '=' means an argument should be supplied.
-        ('test-suite=', None, 'Dragonfly engine to test (default: "text")'),
-        ('pytest-options=', 'o',
-            'pytest options (ex: "-s" to expose stdout/stdin)'),
-    ]
-
-    def initialize_options(self):
-        self.test_suite = 'text'
-        self.pytest_options = ''
-
-    def finalize_options(self):
-        # Check that 'test_suite' is an engine name.
-        from dragonfly.test.suites import engine_tests_dict
-        suite = self.test_suite
-        assert suite in engine_tests_dict.keys(), \
-            "the test suite value must be an engine name, not '%s'" % suite
-
-        # Split pytest options into a list.
-        self.pytest_options = self.pytest_options.split()
-
-    def run(self):
-        from dragonfly.test.suites import run_pytest_suite
-        print("Test suite running for engine '%s'" % self.test_suite)
-        result = run_pytest_suite(self.test_suite, self.pytest_options)
-
-        # Exit using pytest's return code.
-        exit(int(result))
-
-
-#---------------------------------------------------------------------------
 # Set up package.
 
 def read(*names):
@@ -97,8 +60,6 @@ setup(
                         "pyperclip >= 1.7.0",
                         "enum34;python_version<'3.4'",
                         "regex",
-                        "decorator",
-                        "lark-parser",
 
                         # Windows-only dependencies.
                         "comtypes;platform_system=='Windows'",
@@ -114,28 +75,9 @@ setup(
                         "pynput >= 1.4.2;platform_system=='Darwin'",
                         "pyobjc >= 5.2;platform_system=='Darwin'",
                         "py-applescript == 1.0.0;platform_system=='Darwin'",
-
-                        # RPC requirements
-                        "json-rpc",
-                        "Werkzeug",
-                        "requests",
                        ],
 
       extras_require={
-          "sphinx": [
-                     "sphinxwrapper >= 1.2.0",
-                     "pyjsgf >= 1.7.0",
-                     "pyaudio"
-                    ],
-          "kaldi": [
-                    "kaldi-active-grammar ~= %s" % read("dragonfly", "engines", "backend_kaldi", "kag_version.txt").strip(),
-                    "sounddevice == 0.3.*",
-                    "webrtcvad-wheels == 2.0.*",
-                   ],
-      },
-
-      cmdclass={
-          "test": test,
       },
 
       classifiers=[
@@ -158,6 +100,4 @@ setup(
                   ],
 
       packages=find_packages(),
-
-      test_suite="dragonfly.test.suites.text_suite",
      )

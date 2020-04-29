@@ -29,7 +29,6 @@ import random
 
 from .point        import Point
 from .rectangle    import Rectangle, unit
-from ..engines     import get_engine
 
 
 #===========================================================================
@@ -131,6 +130,7 @@ class PathBase(object):
         self._timer = None
 
     def start(self):
+        from dragonfly.engines import get_engine
         engine = get_engine()
         self._timer = engine.create_timer(self.timer_callback, self._interval)
 

@@ -25,10 +25,8 @@ This file offers access to various action classes.
 
 from .action_pause        import Pause
 from .action_function     import Function
-from .action_playback     import Playback
 from .action_base         import (ActionBase, DynStrActionBase,
                                   Repeat, ActionError)
-from .action_mimic        import Mimic
 from .action_cmd          import RunCommand
 from .action_context      import ContextAction
 from .keyboard            import Keyboard, Typeable
